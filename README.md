@@ -1,0 +1,1 @@
+A simple expense tracker as a first Vue project
