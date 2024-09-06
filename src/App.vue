@@ -1,8 +1,8 @@
 <template>
   <Header />
   <div class="container">
-    <Balance />
-    <IncomeExpenses />
+    <Balance v-bind:total="total" />
+    <IncomeExpenses v-bind:income="income" v-bind:expenses="expenses" />
     <TransactionList v-bind:transactions="transactions" />
     <AddTransaction />
   </div>
@@ -17,7 +17,7 @@
   import AddTransaction from './components/AddTransaction.vue'
 
   // used to turn something reactive
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
 
   const transactions = ref([
     {id: 1, text: 'Flowers', amount: -67.91},
@@ -25,4 +25,29 @@
     {id: 3, text: 'Book', amount: -24.99},
     {id: 4, text: 'Camera', amount: -2559},
   ])  
+
+  // have to use transactions.value as it is in computed form
+  const total = computed(() => {
+    return transactions.value.reduce((acc, transaction) => {
+      return acc + transaction.amount
+    }, 0)
+  })
+
+  // get income
+  const income = computed(() => {
+    return transactions.value
+    .filter((transaction) => transaction.amount > 0)
+    .reduce((acc, transaction) => {
+      return acc + transaction.amount
+    }, 0).toFixed(2)
+  })
+
+  // get expenses
+  const expenses = computed(() => {
+    return transactions.value
+    .filter((transaction) => transaction.amount < 0)
+    .reduce((acc, transaction) => {
+      return acc + transaction.amount
+    }, 0).toFixed(2)
+  })
 </script>
