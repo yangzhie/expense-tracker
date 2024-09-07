@@ -24,17 +24,27 @@
     const amount = ref('')
     const toast = useToast()
 
+    const emit = defineEmits([
+        'transactionSubmitted'
+    ])
+
     // validation using vue-toastification
     const onSubmit = () => {
         if(!text.value || !amount.value) {
-            toast.error("Both fields must be filled")
+            toast.error('Both fields must be filled')
             return
         }
 
-        console.log(text.value, amount.value) 
+        const transactionData = {
+            text: text.value,
+            amount: parseFloat(amount.value)
+        }
+
+        // emitting event to parent
+        emit('transactionSubmitted', transactionData)
 
         // clearing fields
-        text.value = ""
-        amount.value = ""
+        text.value = ''
+        amount.value = ''
     }
 </script>

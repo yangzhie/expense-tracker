@@ -3,13 +3,13 @@
         <div>
             <h4>Income</h4>
             <p id="money-plus" class="money plus">
-            +${{ income }}
+                +${{ income }}
             </p>
         </div>
         <div>
             <h4>Expenses</h4>
             <p id="money-minus" class="money minus">
-            -${{ expenses }}
+                ${{ expenses }}
             </p>
         </div>
     </div>
