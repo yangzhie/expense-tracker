@@ -24,6 +24,7 @@
     const amount = ref('')
     const toast = useToast()
 
+    // helps to emit data to state
     const emit = defineEmits([
         'transactionSubmitted'
     ])

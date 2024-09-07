@@ -19,17 +19,24 @@
 
   import { useToast } from 'vue-toastification'
 
-  // used to turn something reactive
-  import { ref, computed } from 'vue'
+  // ref used to turn data reactive
+  // computed for calculation
+  // onMounted is lifecycle hook, fires off automatically when component mounts - similar to useEffect
+  import { ref, computed, onMounted } from 'vue'
 
   const toast = useToast()
 
-  const transactions = ref([
-    {id: 1, text: 'Flowers', amount: -67.91},
-    {id: 2, text: 'Salary', amount: 705.44},
-    {id: 3, text: 'Book', amount: -24.99},
-    {id: 4, text: 'Camera', amount: -2559},
-  ])  
+  const transactions = ref([])  
+
+  onMounted(() => {
+    // check local storage
+    // JSON.parse turns from string to regular array again
+    const savedTransactions = JSON.parse(localStorage.getItem(transactions))
+
+    if(savedTransactions) {
+      transactions.value = savedTransactions
+    }
+  })
 
   // have to use transactions.value as it is in computed form
   const total = computed(() => {
@@ -59,11 +66,14 @@
 
   // add transaction
   const handleTransactionSubmitted = (transactionData) => {
+    // from the addTransactions the event comes and then modifies (adds to) the transaction array
     transactions.value.push({
       id: genID(),
       text: transactionData.text,
       amount: transactionData.amount
     })
+
+    saveTransactionToLocalStorage()
 
     toast.success('Transaction added')
   }
@@ -73,8 +83,16 @@
     return Math.floor(Math.random() * 1000)
   }
 
+  // function to delete transaction
   const handleTransactionDeleted = (id) => {
     transactions.value = transactions.value.filter((transaction) => transaction.id != id)
     toast.success('Transaction deleted')
+
+    saveTransactionToLocalStorage()
+  }
+
+  // save to local storage
+  const  saveTransactionToLocalStorage = () => {
+    localStorage.setItem('transactions', JSON.stringify(transactions.value))
   }
 </script>
