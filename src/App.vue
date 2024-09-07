@@ -2,7 +2,7 @@
   <Header />
   <div class="container">
     <Balance v-bind:total="total" />
-    <IncomeExpenses v-bind:income="income" v-bind:expenses="expenses" />
+    <IncomeExpenses v-bind:income="+income" v-bind:expenses="+expenses" />
     <TransactionList v-bind:transactions="transactions" />
     <AddTransaction />
   </div>
@@ -14,6 +14,7 @@
   import IncomeExpenses from './components/IncomeExpenses.vue'
   // passing down transactions array to TransactionList
   import TransactionList from './components/TransactionList.vue'
+  // this is the only component where we pass props from child to parent then pass it down again to other components
   import AddTransaction from './components/AddTransaction.vue'
 
   // used to turn something reactive
@@ -33,7 +34,8 @@
     }, 0)
   })
 
-  // get income
+  // get income 
+  // in the passing down of this, we have to convert to Number form using +
   const income = computed(() => {
     return transactions.value
     .filter((transaction) => transaction.amount > 0)
