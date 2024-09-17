@@ -7,6 +7,13 @@ An intuitive expense tracker built with Vue 3 using the Composition API. This ap
 - User-friendly notifications: Enjoy seamless interactions with real-time notifications for your actions, courtesy of Vue-toastification.
 - Responsive Design: Access and manage your expenses across different devices with a responsive user interface.
 
+## Screenshots
+### Home Page 
+![Home Page](./public/front-page.PNG)
+
+### Home Page with Toast & Transactions
+![Home Page Toast Transactions](./public/toast-transactions.PNG)
+
 ## Installation
 1. Clone the repositiory
 > git clone https://github.com/yangzhie/expense-tracker.git
